@@ -1,32 +1,36 @@
 #include <QtGui/QApplication>
-#include<QGraphicsView>
-#include<QGraphicsScene>
-//#include<QGraphicsItem>
-//#include<QGraphicsPixmapItem>
-#include"object.h"
-#include"triangle.h"
-#include"rectangle.h"
-#include"square.h"
-#include"enemy.h"
-#include <QObject>
-#include <QTimer>
+#include "Player.h"
+#include <qgraphicsview>
+#include <QGraphicsScene>
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QGraphicsView * view=new QGraphicsView;
-    QGraphicsScene * scene=new QGraphicsScene;
-    Enemy * player;
-    player->setFlag(QGraphicsItem::ItemIsFocusable);
-    player->setFocus();
-    view->setScene(scene);
-    scene->addItem(player);
+    //create a scene
+    QGraphicsScene * scene= new QGraphicsScene();
+    //create an item to add into the scene
+
+    Player * item= new Player();
+    item->setRotation(63);
+    item->setPixmap(QPixmap(":/pic/favicon-96x96.png"));
+
+    //put the item into the scene
+    scene->addItem(item);
+    item->setFlag(QGraphicsItem::ItemIsFocusable);
+    item->setFocus();
+
+    //create a view
+    QGraphicsView * view =new QGraphicsView(scene);
     view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+
+
     view->setFixedSize(800,600);
-    QTimer * timer = new QTimer();
-    int i = 2000;
-    QObject::connect(timer , SIGNAL(timeout()),player, SLOT(Create()));
-    timer->start(i);
+    scene->setSceneRect(0,0,800,600);
+    item->setPos(view->width()/2 , view->height()-item->pixmap().height());
     view->show();
+
     return a.exec();
 }
