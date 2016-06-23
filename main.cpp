@@ -12,6 +12,7 @@ Game *game;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //create a new game
     game=new Game;
     game->show();
     return a.exec();
