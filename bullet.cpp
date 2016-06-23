@@ -20,7 +20,7 @@ void Bullet::move()
     QList<QGraphicsItem *> itemList = collidingItems();
     for(int i=0 ;i < itemList.size();i++)
     {
-        if(typeid(*(itemList[i])) == typeid(player))\
+        if(typeid(*(itemList[i])) == typeid(player))
         {
             game->score->increase();
 
