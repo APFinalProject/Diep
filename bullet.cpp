@@ -1,6 +1,6 @@
 #include "bullet.h"
 #include <QTimer>
-
+#include<Qlist>
 
 Bullet::Bullet(QObject *parent) :
     QObject(parent)
@@ -17,6 +17,21 @@ Bullet::Bullet(QObject *parent) :
 void Bullet::move()
 {
     setPos(x()+10,y()+10);
+    QList<QGraphicsItem *> itemList = collidingItems();
+    for(int i=0 ;i < itemList.size();i++)
+    {
+        if(typeid(*(itemList[i])) == typeid(enemy))\
+        {
+            game->score->increase();
+
+            scene()->removeItem(itemList[i]);
+            scene()->removeItem(this);
+
+            delete itemList[i];
+            delete this;
+            return;
+        }
+    }
     if(pos().y() < 0)
     {
         //scene()->removeItem(this);
