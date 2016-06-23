@@ -4,8 +4,6 @@
 #include <qmath.h>
 #include <QGraphicsScene>
 #include <math.h>
-//bullet->setPos(x()+ pixmap().width()/2 - bullet->pixmap().width()/3 + (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10))
-//, y()- bullet->pixmap().height()/2 + (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10)));
 
 Player::Player()
 {
