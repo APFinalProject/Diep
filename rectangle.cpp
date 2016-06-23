@@ -3,7 +3,7 @@
 Rectangle::Rectangle()
 {
     setPixmap(QPixmap(":/images/Rectangle.png"));
-    int rand1=rand()%800;
-    int rand2=rand()%600;
+    int rand1=rand()%720;
+    int rand2=rand()%528;
     this->setPos(rand1,rand2);
 }
