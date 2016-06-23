@@ -15,14 +15,14 @@ SOURCES += main.cpp \
     object.cpp \
     square.cpp \
     triangle.cpp \
-    enemy.cpp
+    game.cpp
 
 HEADERS  += \
     rectangle.h \
     object.h \
     square.h \
     triangle.h \
-    enemy.h
+    game.h
 
 FORMS    +=
 
