@@ -1,13 +1,10 @@
 #include <QApplication>
 #include<QGraphicsView>
 #include<QGraphicsScene>
-//#include<QGraphicsItem>
-//#include<QGraphicsPixmapItem>
 #include"object.h"
 #include"triangle.h"
 #include"rectangle.h"
-#include"square.h"
-//#include"enemy.h"
+#include"square.h
 #include"game.h"
 #include <QObject>
 #include <QTimer>
