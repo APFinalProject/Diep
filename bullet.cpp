@@ -1,5 +1,6 @@
 #include "bullet.h"
-
+#include"game.h"
+extern Game * game;
 Bullet::Bullet(QObject *parent) :
     QObject(parent)
 {
