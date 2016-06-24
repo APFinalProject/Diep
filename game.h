@@ -1,23 +1,32 @@
 #ifndef GAME_H
 #define GAME_H
-#include<QGraphicsScene>
-#include<QGraphicsView>
-#include"rectangle.h"
-#include"square.h"
-#include"triangle.h"
-#include <QObject>
-#include<QTimer>
-//#include"health.h"
-#include"score.h"
-class Game:public QGraphicsView
+
+#include <QWidget>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QGraphicsView>
+#include "object.h"
+#include "triangle.h"
+#include "square.h"
+#include "player.h"
+#include "score.h"
+#include "health.h"
+
+class Game : public QGraphicsView
 {
- Q_OBJECT
+    Q_OBJECT
 public:
-    Game(QWidget * parent = 0);
-    QGraphicsScene * scene;
+    Game(QWidget *parent = 0);
+    QGraphicsScene *scene;
+    Player *player;
     Score * score;
+    Health * health;
+
+signals:
+    
 public slots:
-    void Create();
+    void create();
+    
 };
 
 #endif // GAME_H
