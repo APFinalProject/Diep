@@ -8,7 +8,7 @@ private:
     int health;
 public:
 
-    Health(QGraphicsItem * parent);
+    Health(QGraphicsItem * parent=0);
     int get_health(){
         return health;
     }
