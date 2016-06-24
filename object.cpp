@@ -2,5 +2,4 @@
 
 Object::Object()
 {
-   //empty
 }

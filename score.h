@@ -8,6 +8,7 @@ class Score : public QGraphicsTextItem
 private:
     int score;
 public:
+    Score(const Score&);
     Score(QGraphicsItem * parent);
     int get_score(){
         return score;

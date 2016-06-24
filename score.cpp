@@ -11,9 +11,11 @@ Score::Score(QGraphicsItem * parent):QGraphicsTextItem(parent)
     setPlainText(QString("score:"+QString::number(score)));
     setDefaultTextColor(Qt::yellow);
     setFont(QFont("times",16));
-
 }
 
 void Score::increase(){
 score ++;
+}
+Score::Score(const Score & sc){
+this->score=sc.score;
 }

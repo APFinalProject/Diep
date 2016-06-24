@@ -7,7 +7,7 @@
 
 Player::Player()
 {
-    setPixmap(QPixmap(":/image/tank.png"));
+    setPixmap(QPixmap(":/images/tank.png"));
 
     setPos(400,300);
 }

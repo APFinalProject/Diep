@@ -1,11 +1,14 @@
 #include "bullet.h"
 #include"game.h"
+#include "player.h"
 extern Game * game;
+
+
 Bullet::Bullet(QObject *parent) :
     QObject(parent)
 {
     //creat bullet
-    setPixmap(QPixmap(":/image/bullet.png"));
+    setPixmap(QPixmap(":/images/bullet.png"));
     setScale(0.5);
     //set timer to move bullet
     QTimer * timer = new QTimer();

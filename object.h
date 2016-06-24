@@ -7,6 +7,7 @@ class Object:public QGraphicsPixmapItem
 {
 public:
     Object();
+    void increase();
 };
 
 #endif // OBJECT_H
