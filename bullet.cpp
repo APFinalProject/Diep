@@ -39,11 +39,22 @@ void Bullet::move()
             {
                 qDebug()<<"colliding";
                 game->score->increase();
-
                 scene()->removeItem(itemList[i]);
                 scene()->removeItem(this);
+                if(typeid(*(itemList[i]))==typeid(Square) &&Square().SQhealth->get_health()==0)
+                {
+                    delete itemList[i];
+                }
+                if(typeid(*(itemList[i]))==typeid(Triangle) && Triangle().TRhealth->get_health()==0)
+                {
+                    delete itemList[i];
 
-                delete itemList[i];
+                }
+                if(typeid(*(itemList[i]))==typeid(Pentagon) && Pentagon().PEhealth->get_health()==0)
+                {
+                    delete itemList[i];
+
+                }
                 delete this;
                 return;
             }

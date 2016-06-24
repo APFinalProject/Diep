@@ -3,6 +3,7 @@
 #include "triangle.h"
 #include"stdlib.h"
 #include <QTimer>
+#include <QDebug>
 #include <QObject>
 #include "pentagon.h"
 
@@ -27,7 +28,14 @@ Game::Game(QWidget *parent):
     QTimer * timer = new QTimer();
     //connect a signal to slot for create
     QObject::connect(timer,SIGNAL(timeout()) , this , SLOT(create()));
-    timer->start(5000);
+    timer->start(500);
+
+    score = new Score();
+    scene->addItem(score);
+
+    health = new Health();
+    health->setPos(x(),y()+25);
+    scene->addItem(health);
 
 
     show();
@@ -38,6 +46,7 @@ Game::Game(QWidget *parent):
 
 void Game::create()
 {
+    qDebug()<<"aaaaaaa";
     //choose one of the shapes that inherits from object randomly and show it
     int rnumber1=rand()%3;
     if(rnumber1==1){

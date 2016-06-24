@@ -1,10 +1,13 @@
 #ifndef PENTAGON_H
 #define PENTAGON_H
+
 #include"object.h"
-class pentagon:public Object
+#include"health.h"
+class Pentagon :public Object
 {
 public:
-    pentagon();
+    Pentagon();
+    Health * PEhealth;
 };
 
 #endif // PENTAGON_H

@@ -4,36 +4,44 @@
 #include <qmath.h>
 #include <QGraphicsScene>
 #include <math.h>
+//bullet->setPos(x()+ pixmap().width()/2 - bullet->pixmap().width()/3 + (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10))
+//, y()- bullet->pixmap().height()/2 + (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10)));
 
 Player::Player()
 {
-    setPixmap(QPixmap(":/images/tank.png"));
+    setPixmap(QPixmap(":/image/tank.png"));
 
     setPos(400,300);
 }
 void Player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Left)
-     {
-         setPos(x()-10,y());
-     }
-     else if(event->key() == Qt::Key_Right)
-     {
-         setPos(x()+10,y());
-     }
-     else if(event->key() == Qt::Key_Up)
-     {
-         setPos(x(),y()-10);
-     }
-     else if(event->key() == Qt::Key_Down)
-     {
-         setPos(x(),y()+10);
-     }
-    else if(event->key() == Qt::Key_V)
+    {
+        if(pos().x()>0)
+        setPos(x()-10,y());
+    }
+    else if(event->key() == Qt::Key_Right)
+    {
+
+        if(x()+pixmap().width()<800)
+        setPos(x()+10,y());
+    }
+    else if(event->key() == Qt::Key_Up)
+    {
+        if(pos().y()>0)
+        setPos(x(),y()-10);
+    }
+    else if(event->key() == Qt::Key_Down)
+    {
+        if(y()+pixmap().height()<600)
+        setPos(x(),y()+10);
+    }
+
+    else if(event->key() == Qt::Key_Shift)
     {
         Bullet *bullet = new Bullet();
 
-        //qDebug() <<  x()<<y() ;
+        qDebug() <<  x()<<y() ;
 
         if(fmod(rotation(), 360)<=0 && fmod(rotation(), 360)>-90
                 || fmod(rotation(), 360)>=270 && fmod(rotation(), 360)<360)
@@ -72,6 +80,6 @@ void Player::keyPressEvent(QKeyEvent *event)
         setRotation(rotation()+20);
         qDebug() <<rotation() ;
     }
-    // return;
+    return;
 
 }
