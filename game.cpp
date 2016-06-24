@@ -3,7 +3,6 @@
 #include "triangle.h"
 #include"stdlib.h"
 #include <QTimer>
-#include <QDebug>
 #include <QObject>
 #include "pentagon.h"
 
@@ -39,7 +38,6 @@ Game::Game(QWidget *parent):
 
 void Game::create()
 {
-    qDebug()<<"aaaaaaa";
     //choose one of the shapes that inherits from object randomly and show it
     int rnumber1=rand()%3;
     if(rnumber1==1){
