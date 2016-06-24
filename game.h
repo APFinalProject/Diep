@@ -1,13 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
 #include<QGraphicsScene>
-#include<qgraphicsview>
+#include<QGraphicsView>
 #include"rectangle.h"
 #include"square.h"
 #include"triangle.h"
 #include <QObject>
 #include<QTimer>
-#include"health.h"
+//#include"health.h"
 #include"score.h"
 class Game:public QGraphicsView
 {
@@ -15,6 +15,7 @@ class Game:public QGraphicsView
 public:
     Game(QWidget * parent = 0);
     QGraphicsScene * scene;
+    Score * score;
 public slots:
     void Create();
 };

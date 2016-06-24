@@ -12,11 +12,11 @@ Game::Game(QWidget * parent):QGraphicsView(parent)
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFixedSize(800,600);
-    QTimer * timer = new QTimer();
+    /*QTimer * timer = new QTimer();
     int i = 2000;
     connect(timer , SIGNAL(timeout()),this, SLOT(Create()));
     timer->start(i);
-    show();
+    */show();
 }
 void Game::Create(){
     int rnumber1=rand()%3;

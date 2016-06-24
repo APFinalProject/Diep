@@ -1,9 +1,8 @@
 #include "bullet.h"
 #include"game.h"
 #include "player.h"
+
 extern Game * game;
-
-
 Bullet::Bullet(QObject *parent) :
     QObject(parent)
 {
@@ -22,7 +21,7 @@ void Bullet::move()
     QList<QGraphicsItem *> itemList = collidingItems();
     for(int i=0 ;i < itemList.size();i++)
     {
-        if(typeid(*(itemList[i])) == typeid(player))
+        if(typeid(*(itemList[i])) == typeid(Player))
         {
             game->score->increase();
 
