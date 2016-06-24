@@ -2,7 +2,7 @@
 #include <QGraphicsPixmapItem>
 
 Player::Player(){
-
+setPixmap(QPixmap(":/pic1/tank (2).png"));
 
 
 }
