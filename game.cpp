@@ -4,8 +4,9 @@
 Game::Game(QWidget * parent):QGraphicsView(parent)
 {
     scene=new QGraphicsScene;
+    setBackgroundBrush(QBrush(QImage(":/images/wallpaper.png")));
     setScene(scene);
-    score=new Score;
+    score=new Score();
     //scene->addItem(player);
     scene->setSceneRect(0,0,800,600);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
