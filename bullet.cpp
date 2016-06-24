@@ -1,6 +1,4 @@
 #include "bullet.h"
-#include <QTimer>
-#include<Qlist>
 
 Bullet::Bullet(QObject *parent) :
     QObject(parent)
