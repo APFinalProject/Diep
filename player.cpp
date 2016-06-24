@@ -29,11 +29,11 @@ void Player::keyPressEvent(QKeyEvent *event)
      {
          setPos(x(),y()+10);
      }
-    else if(event->key() == Qt::Key_Shift)
+    else if(event->key() == Qt::Key_V)
     {
         Bullet *bullet = new Bullet();
 
-        qDebug() <<  x()<<y() ;
+        //qDebug() <<  x()<<y() ;
 
         if(fmod(rotation(), 360)<=0 && fmod(rotation(), 360)>-90
                 || fmod(rotation(), 360)>=270 && fmod(rotation(), 360)<360)
