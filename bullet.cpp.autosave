@@ -33,8 +33,6 @@ void Bullet::move()
     float degrees;
     float radians;
 
-    //int angel =
-
     if(game->player->rotation()<0)
     {
         degrees = -fmod(game->player->rotation() , 360)+90;
