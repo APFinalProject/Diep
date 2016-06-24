@@ -1,28 +1,50 @@
 #include "game.h"
+#include <QGraphicsRectItem>
+#include "triangle.h"
 #include"stdlib.h"
+#include <QTimer>
+#include <QDebug>
+#include <QObject>
+#include "pentagon.h"
 
-Game::Game(QWidget * parent):QGraphicsView(parent)
+
+Game::Game(QWidget *parent):
+    QGraphicsView(parent)
 {
-    scene=new QGraphicsScene;
-    setBackgroundBrush(QBrush(QImage(":/images/wallpaper.png")));
+    scene = new QGraphicsScene();
+
     setScene(scene);
-    score=new Score();
-    //scene->addItem(player);
-    scene->setSceneRect(0,0,800,600);
+
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    player = new Player();
+    scene->addItem(player);
+
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    player->setFocus();
+
+    //create a Qtimer
+    QTimer * timer = new QTimer();
+    //connect a signal to slot for create
+    QObject::connect(timer,SIGNAL(timeout()) , this , SLOT(create()));
+    timer->start(5000);
+
+
+    show();
+
     setFixedSize(800,600);
-    /*QTimer * timer = new QTimer();
-    int i = 2000;
-    connect(timer , SIGNAL(timeout()),this, SLOT(Create()));
-    timer->start(i);
-    */show();
+    scene->setSceneRect(0,0,800,600);
 }
-void Game::Create(){
+
+void Game::create()
+{
+    qDebug()<<"aaaaaaa";
+    //choose one of the shapes that inherits from object randomly and show it
     int rnumber1=rand()%3;
     if(rnumber1==1){
-        Rectangle* rec=new Rectangle();
-        scene->addItem(rec);
+        Pentagon * pen=new Pentagon();
+        scene->addItem(pen);
     }
     else if(rnumber1==2){
         Square * squ=new Square();
