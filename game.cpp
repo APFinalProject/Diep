@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QObject>
 #include "pentagon.h"
+#include <QMediaPlayer>
 
 
 Game::Game(QWidget *parent):
@@ -29,6 +30,11 @@ Game::Game(QWidget *parent):
     //connect a signal to slot for create
     QObject::connect(timer,SIGNAL(timeout()) , this , SLOT(create()));
     timer->start(5000);
+    
+    
+    QMediaPlayer * music=new QMediaPlayer();
+    music->setMedia(QUrl());
+    music->play();
 
     score = new Score();
     scene->addItem(score);
