@@ -2,7 +2,7 @@
 #include <game.h>
 
 extern Game * game;
-Health::Health(QGraphicsItem * parent , int i_health):QGraphicsTextItem(parent)
+Health::Health(int i_health,QGraphicsItem * parent ):QGraphicsTextItem(parent)
 {
     //initialize healt for instance 5
     health = i_health;
@@ -16,12 +16,10 @@ Health::Health(QGraphicsItem * parent , int i_health):QGraphicsTextItem(parent)
 void Health::decrease()
 {
     health--;
+    setPlainText(QString("Health:"+ QString::number(health)));
 }
 
 void Health::setHealth(int i_health)
 {
     health = i_health;
 }
-/*void Health::gethealth(){
-    return health;
-}*/

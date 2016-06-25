@@ -4,16 +4,25 @@
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 #include <QWidget>
+#include <QObject>
+#include "health.h"
+#include <QVector>
+#include "bullet.h"
 
-class Player : public QGraphicsPixmapItem
+class Player : public QObject,public QGraphicsPixmapItem
 {
+    Q_OBJECT
 public:
-     Player();
-     void keyPressEvent(QKeyEvent * event );
+    explicit Player(QObject *parent = 0);
+    void keyPressEvent(QKeyEvent * event );
+    QVector<Bullet*> v_bullet;
+
 
 signals:
 
 public slots:
+     void collide_player();
+     void delete_bullets();
 
 };
 

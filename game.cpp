@@ -28,14 +28,15 @@ Game::Game(QWidget *parent):
     QTimer * timer = new QTimer();
     //connect a signal to slot for create
     QObject::connect(timer,SIGNAL(timeout()) , this , SLOT(create()));
-    timer->start(10000);
+    timer->start(5000);
 
     score = new Score();
     scene->addItem(score);
 
-    health = new Health();
+    health = new  Health(8);
     health->setPos(x(),y()+25);
     scene->addItem(health);
+
 
 
     show();
@@ -46,7 +47,7 @@ Game::Game(QWidget *parent):
 
 void Game::create()
 {
-    qDebug()<<"object";
+    qDebug()<<"aaaaaaa";
     //choose one of the shapes that inherits from object randomly and show it
     int rnumber1=rand()%3;
     if(rnumber1==1){

@@ -23,10 +23,10 @@ public:
     Health * health;
 
 signals:
-
+    
 public slots:
     void create();
-
+    
 };
 
 #endif // GAME_H

@@ -29,11 +29,8 @@ Bullet::Bullet(QObject *parent) :
 
 void Bullet::move()
 {
-
     float degrees;
     float radians;
-
-    //int angel =
 
     if(game->player->rotation()<0)
     {
@@ -42,7 +39,7 @@ void Bullet::move()
     }
     else
     {
-        degrees = fmod(game->player->rotation() , 360)+90;
+        degrees = 90-fmod(game->player->rotation() , 360);
         radians = qDegreesToRadians(degrees);
     }
     if(degrees>=90 && degrees<270)

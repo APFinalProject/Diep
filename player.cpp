@@ -4,15 +4,53 @@
 #include <qmath.h>
 #include <QGraphicsScene>
 #include <math.h>
-//bullet->setPos(x()+ pixmap().width()/2 - bullet->pixmap().width()/3 + (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10))
-//, y()- bullet->pixmap().height()/2 + (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10)));
+#include <QTimer>
+#include "game.h"
+#include "score.h"
+#include "triangle.h"
+#include "square.h"
+#include "pentagon.h"
+#include <QList>
+#include <QGraphicsItem>
+#include <typeinfo>
 
-Player::Player()
+extern Game *game;
+Player::Player(QObject *parent):QObject(parent)
 {
     setPixmap(QPixmap(":/image/tank.png"));
-
     setPos(400,300);
+    //creat timer and connect for shooting the bullets
+    QTimer * shoot_timer=new QTimer();
+    QObject::connect(shoot_timer,SIGNAL(timeout()),this,SLOT(collide_player()));
+    shoot_timer->start(200);
+    //creat timer and connect too delete the bullets
+    QTimer * delete_timer=new QTimer();
+    QObject::connect(delete_timer,SIGNAL(timeout()),this,SLOT(delete_bullets()));
+    delete_timer->start(1000);
 }
+void Player::collide_player(){
+
+    QList<QGraphicsItem*> items=collidingItems();
+    for (int i=0,n=items.size();i<n;++i){
+        if(typeid(*(items[i]))== typeid(Square) ||typeid(*(items[i]))==typeid(Triangle)||typeid(*(items[i]))==typeid(Pentagon)){
+            // decrease the health of the player
+            game->health->decrease();
+        }
+    }
+    return;
+}
+
+void Player::delete_bullets()
+{
+    for(int i=0;i<v_bullet.size();i++)
+    {
+        //qDebug()<<"remove";
+        scene()->removeItem(v_bullet[i]);
+        //v_bullet.remove(i);
+        //delete v_bullet[i];
+    }
+}
+
 void Player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Left)
@@ -40,6 +78,7 @@ void Player::keyPressEvent(QKeyEvent *event)
     else if(event->key() == Qt::Key_Shift)
     {
         Bullet *bullet = new Bullet();
+        v_bullet.push_back(bullet);
         float degrees=0.0;
         float radians=0.0;
 
@@ -84,37 +123,7 @@ void Player::keyPressEvent(QKeyEvent *event)
             bullet->setPos(x()+14+14 +(qCos(radians)* 51),y()-21 + ((1-qSin(radians))* 51));
         else if(degrees>=50 && degrees<90)
             bullet->setPos(x()+14+14 +(qCos(radians)* 51),y()-21 + ((1-qSin(radians))* 51));
-
-
-
-
-
-
-
-/*
-        if(fmod(rotation(), 360)<=0 && fmod(rotation(), 360)>-90
-                || fmod(rotation(), 360)>=270 && fmod(rotation(), 360)<360)
-            bullet->setPos(x()+ pixmap().width()/2 - bullet->pixmap().width()/3 + (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10))
-                       , y()- bullet->pixmap().height()/2 - (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10)) );
-
-        else if(fmod(rotation(), 360)<=-90 && fmod(rotation(), 360)>-180
-                || fmod(rotation(), 360)>=180 && fmod(rotation(), 360)<270)
-            bullet->setPos(x()- pixmap().width()/2 - bullet->pixmap().width()/3 - (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10))
-                           , y()+ bullet->pixmap().height()/2 - (( pixmap().height()*2/3/9)*(fmod(rotation(), 180)/10)));
-
-        else if(fmod(rotation(), 360)>=90 && fmod(rotation(), 360)<180
-                || fmod(rotation(), 360)<=-180 && fmod(rotation(), 360)>-270)
-            bullet->setPos(x()+ pixmap().width()/2 + bullet->pixmap().width()/3 - ((pixmap().height()*2/3/8.5)*(fmod(rotation(), 90)/10))
-                           , y()+pixmap().height());
-
-        else if(fmod(rotation(), 360)>=0 && fmod(rotation(), 360)<90
-                || fmod(rotation(), 360)<=-270 && fmod(rotation(), 360)>-360)
-            bullet->setPos(x()+ pixmap().width()/3 - bullet->pixmap().width()/2 - (( pixmap().height()*2/3/9)*(fmod(rotation(), 90)/10))
-                           , y()- bullet->pixmap().height()/2 - (( pixmap().height()*2/3/9)*((fmod(rotation(), 90)/10))));
-*/
         scene()->addItem(bullet);
-
-
     }
     else if(event->key() == Qt::Key_Z)
     {
@@ -132,3 +141,4 @@ void Player::keyPressEvent(QKeyEvent *event)
     return;
 
 }
+
