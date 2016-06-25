@@ -7,7 +7,6 @@ class Triangle:public Object
 {
 public:
     Triangle();
-    Health * TRhealth;
 };
 
 #endif // TRIANGLE_H

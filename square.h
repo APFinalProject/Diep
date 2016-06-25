@@ -7,7 +7,6 @@ class Square:public Object
 {
 public:
     Square();
-    Health * SQhealth;
 };
 
 #endif // SQUARE_H

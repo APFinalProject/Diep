@@ -3,9 +3,8 @@
 Triangle::Triangle()
 {
      setPixmap(QPixmap(":/image/triangle.png"));
-     int rand1=rand()%720;
-     int rand2=rand()%528;
+     int rand1=rand()%757;
+     int rand2=rand()%551;
      setPos(rand1,rand2);
-     TRhealth=new Health();
-     TRhealth->setHealth(3);
+     health=3;
 }

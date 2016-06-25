@@ -1,8 +1,8 @@
 #include "health.h"
 #include <game.h>
-
+#include<QDebug>
 extern Game * game;
-Health::Health(int i_health,QGraphicsItem * parent ):QGraphicsTextItem(parent)
+Health::Health(QGraphicsItem * parent , int i_health):QGraphicsTextItem(parent)
 {
     //initialize healt for instance 5
     health = i_health;
@@ -15,8 +15,12 @@ Health::Health(int i_health,QGraphicsItem * parent ):QGraphicsTextItem(parent)
 }
 void Health::decrease()
 {
+
     health--;
     setPlainText(QString("Health:"+ QString::number(health)));
+    if(health==0){
+        exit(0);
+    }
 }
 
 void Health::setHealth(int i_health)

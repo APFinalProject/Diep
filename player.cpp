@@ -1,6 +1,5 @@
 #include "player.h"
 #include "bullet.h"
-#include <QDebug>
 #include <qmath.h>
 #include <QGraphicsScene>
 #include <math.h>
@@ -13,23 +12,20 @@
 #include <QList>
 #include <QGraphicsItem>
 #include <typeinfo>
+#include <QObject>
 
 extern Game *game;
-Player::Player(QObject *parent):QObject(parent)
+Player::Player(QObject * parent):QObject(parent)
 {
     setPixmap(QPixmap(":/image/tank.png"));
     setPos(400,300);
-    //creat timer and connect for shooting the bullets
-    QTimer * shoot_timer=new QTimer();
-    QObject::connect(shoot_timer,SIGNAL(timeout()),this,SLOT(collide_player()));
-    shoot_timer->start(200);
-    //creat timer and connect too delete the bullets
-    QTimer * delete_timer=new QTimer();
-    QObject::connect(delete_timer,SIGNAL(timeout()),this,SLOT(delete_bullets()));
-    delete_timer->start(1000);
+    //creat timer and connect for colliding player with objects
+    QTimer * collide_timer=new QTimer();
+    QObject::connect(collide_timer,SIGNAL(timeout()),this,SLOT(collide_player()));
+    collide_timer->start(2000);
 }
 void Player::collide_player(){
-
+//create a list of objects that may collides with player
     QList<QGraphicsItem*> items=collidingItems();
     for (int i=0,n=items.size();i<n;++i){
         if(typeid(*(items[i]))== typeid(Square) ||typeid(*(items[i]))==typeid(Triangle)||typeid(*(items[i]))==typeid(Pentagon)){
@@ -39,18 +35,6 @@ void Player::collide_player(){
     }
     return;
 }
-
-void Player::delete_bullets()
-{
-    for(int i=0;i<v_bullet.size();i++)
-    {
-        //qDebug()<<"remove";
-        scene()->removeItem(v_bullet[i]);
-        //v_bullet.remove(i);
-        //delete v_bullet[i];
-    }
-}
-
 void Player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Left)
@@ -75,7 +59,7 @@ void Player::keyPressEvent(QKeyEvent *event)
         setPos(x(),y()+10);
     }
 
-    else if(event->key() == Qt::Key_Shift)
+    else if(event->key() == Qt::Key_C)
     {
         Bullet *bullet = new Bullet();
         v_bullet.push_back(bullet);
@@ -94,15 +78,6 @@ void Player::keyPressEvent(QKeyEvent *event)
         }
 
         degrees = fmod(degrees,360);
-        //qDebug()<<degrees;
-        //qDebug()<<bullet->x()<<bullet->y();
-
-
-        //0-2bullet->setPos(x()+28-14 +(qCos(radians)* 51),y()-28 + ((1-qSin(radians))* 51));
-        //3-6bullet->setPos(x()+28-21 +(qCos(radians)* 51),y()-21 + ((1-qSin(radians))* 51));
-        //7-9bullet->setPos(x()+28-26 +(qCos(radians)* 51),y()-14 + ((1-qSin(radians))* 51));
-        //bullet->setPos(x()+28-21 +(qCos(radians)* 51),y()-7 + ((1-qSin(radians))* 51));
-        //bullet->setPos(x()+28-14 +(qCos(radians)* 51),y() + ((1-qSin(radians))* 51));
         if(degrees>=90 && degrees<120 || degrees>-270 && degrees<-240)
             bullet->setPos(x()+28-14 +(qCos(radians)* 51),y()-28 + ((1-qSin(radians))* 51));
         else if(degrees>=120 && degrees<160 ||degrees>=-240 && degrees<-200)
@@ -129,16 +104,13 @@ void Player::keyPressEvent(QKeyEvent *event)
     {
         setTransformOriginPoint(28 , 51);
         setRotation(rotation()-10);
-        qDebug() <<rotation() ;
 
     }
     else if(event->key() == Qt::Key_X)
     {
         setTransformOriginPoint(28 , 51);
         setRotation(rotation()+10);
-        qDebug() <<rotation() ;
     }
     return;
 
 }
-

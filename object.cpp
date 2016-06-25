@@ -2,4 +2,5 @@
 
 Object::Object()
 {
+    //abstract class
 }

@@ -1,6 +1,5 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 #include <QWidget>
@@ -22,7 +21,6 @@ signals:
 
 public slots:
      void collide_player();
-     void delete_bullets();
 
 };
 

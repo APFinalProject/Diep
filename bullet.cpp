@@ -3,7 +3,6 @@
 #include <qmath.h>
 #include <QtMath>
 #include <QDebug>
-#include <QtMath>
 #include <QList>
 #include <QGraphicsItem>
 #include <typeinfo>
@@ -12,8 +11,8 @@
 #include "score.h"
 #include "triangle.h"
 #include "square.h"
+#include "object.h"
 #include "pentagon.h"
-
 extern Game * game;
 Bullet::Bullet(QObject *parent) :
     QObject(parent)
@@ -29,6 +28,8 @@ Bullet::Bullet(QObject *parent) :
 
 void Bullet::move()
 {
+    //move with rotation of tank
+    //convert degrees to radians
     float degrees;
     float radians;
 
@@ -42,83 +43,93 @@ void Bullet::move()
         degrees = 90-fmod(game->player->rotation() , 360);
         radians = qDegreesToRadians(degrees);
     }
-    if(degrees>=90 && degrees<270)
+    //move bullet
+    if(degrees==90)
+        setPos(x(),y()-5);
+    else if(degrees==270)
+        setPos(x(),y()+5);
+    else if(degrees>90 && degrees<270)
         setPos(x()-5, y()+(qTan(radians)*5));
-    else
-setPos(x()+5, y()-(qTan(radians)*5));
-
-    QList <QGraphicsItem *> itemList = collidingItems();
-        for(int i=0 ;i < itemList.size();i++)
-        {
-            if(typeid(*(itemList[i])) == typeid(Triangle)|| typeid(*(itemList[i])) == typeid(Square) || typeid(*(itemList[i])) == typeid(Pentagon) )
+    else if(degrees>270 && degrees<90)
+        setPos(x()+5, y()-(qTan(radians)*5));
+    //colliding bullet with objects
+    QList<QGraphicsItem *> items = collidingItems();
+            for(int i=0 ; i<items.size() ;i++)
             {
-                qDebug()<<"colliding";
-                game->score->increase();
-
-                if(typeid(*(itemList[i]))==typeid(Square)){
-                   if (Square().SQhealth->get_health()==4){
-                        Square().SQhealth->setHealth(3);
-                        qDebug()<<Square().SQhealth->health;
-                    }
-                    else if (Square().SQhealth->get_health()==3){
-                        Square().SQhealth->setHealth(2);
-                        qDebug()<<Square().SQhealth->health;
-                    }
-                    else if (Square().SQhealth->get_health()==2){
-                        Square().SQhealth->setHealth(1);
-                        qDebug()<<Square().SQhealth->health;
-                    }
-                    else if (Square().SQhealth->get_health()==1){
-                        Square().SQhealth->setHealth(0);
-                        qDebug()<<Square().SQhealth->health;
-                    }
-                   else if (Square().SQhealth->get_health()==0){
-                       qDebug()<<Square().SQhealth->health;
-                       scene()->removeItem(itemList[i]);
-                       scene()->removeItem(this);
-                       delete itemList[i];
-                       delete this;
-                   }
-                                }
-                                else if(typeid(*(itemList[i]))==typeid(Triangle)){
-                                    Triangle().TRhealth->decrease();
-                                }
-                                else {
-                                    Pentagon().PEhealth->decrease();
-                                    qDebug()<<Pentagon().PEhealth->get_health();
-                                }
-                if(typeid(*(itemList[i]))==typeid(Square) &&Square().SQhealth->get_health()==0)
+                if(typeid(*(items[i]))==typeid(Square)){
+                    QVector<Object *>::Iterator it = game->objects.begin();
+                    for(int j=0 ; j<game->objects.size() ;j++)
+                    {
+                        if(game->objects.at(j) == items[i])
+                        {
+                                if(game->objects.at(j)->health ==1)
                                 {
-
-                                    scene()->removeItem(itemList[i]);
-                                    scene()->removeItem(this);
-                                    delete itemList[i];
-                                    delete this;
+                                    scene()->removeItem(items[i]);
+                                    game->objects.erase(it+j);
                                 }
-                                else if(typeid(*(itemList[i]))==typeid(Triangle) && Triangle().TRhealth->get_health()==0)
+                                else
                                 {
-
-                                    scene()->removeItem(itemList[i]);
-                                    scene()->removeItem(this);
-                                    delete itemList[i];
-                                    delete this;
+                                    game->objects.at(j)->health--;
                                 }
-                                else if(typeid(*(itemList[i]))==typeid(Pentagon) && Pentagon().PEhealth->get_health()==0)
+                        }
+
+                    }
+                                game->score->increase();
+                                scene()->removeItem(this);
+                                delete this;
+                                return;
+
+                }
+                if(typeid(*(items[i]))==typeid(Triangle)){
+                    QVector<Object *>::Iterator it = game->objects.begin();
+                    for(int j=0 ; j<game->objects.size() ;j++)
+                    {
+                        if(game->objects.at(j) == items[i])
+                        {
+                                if(game->objects.at(j)->health ==1)
                                 {
-
-                                    scene()->removeItem(itemList[i]);
-                                    scene()->removeItem(this);
-                                    delete itemList[i];
-                                    delete this;
+                                    scene()->removeItem(items[i]);
+                                    game->objects.erase(it+j);
                                 }
-                return;
+                                else
+                                {
+                                    game->objects.at(j)->health--;
+                                }
+                        }
+
+                    }
+
+                    game->score->increase();
+                    scene()->removeItem(this);
+                    delete this;
+                    return;
+                }
+                if(typeid(*(items[i]))==typeid(Pentagon)){
+                    QVector<Object *>::Iterator it = game->objects.begin();
+                    for(int j=0 ; j<game->objects.size() ;j++)
+                    {
+                        if(game->objects.at(j) == items[i])
+                        {
+                                if(game->objects.at(j)->health ==1)
+                                {
+                                    scene()->removeItem(items[i]);
+                                    game->objects.erase(it+j);
+                                }
+                                else
+                                {
+                                    game->objects.at(j)->health--;
+                                }
+                        }
+
+                    }
+                    game->score->increase();
+                    scene()->removeItem(this);
+                    delete this;
+                    return;
+                }
             }
-        }
-
-
-    if(pos().y() < 0)
-    {
-        //scene()->removeItem(this);
-        delete this;
-    }
+            if(pos().y() < 0)
+            {
+                delete this;
+            }
 }

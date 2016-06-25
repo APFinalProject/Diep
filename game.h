@@ -1,37 +1,32 @@
 #ifndef GAME_H
 #define GAME_H
-#include<QGraphicsScene>
-#include<qgraphicsview>
-#include <QGraphicsItem>
-#include <QObject>
-#include<QTimer>
+
 #include <QWidget>
-#include "button.h"
+#include <QTimer>
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+#include <QGraphicsView>
+#include <QVector>
+#include <QObject>
+#include "object.h"
 #include "triangle.h"
 #include "square.h"
-#include "Player.h"
+#include "player.h"
 #include "score.h"
 #include "health.h"
-
-class Game : public QGraphicsView
+#include <QTimer>
+class Game :public QGraphicsView
 {
- Q_OBJECT
+    Q_OBJECT
 public:
-    Game(QWidget * parent =0);
-    QGraphicsScene * scene;
-    Player * player;
+    Game(QWidget *parent = 0);
+    QGraphicsScene *scene;
+    Player *player;
     Score * score;
     Health * health;
-    Button * quitt;
-    Button * restartt;
-    Button * startt;
-    void menu();
-    void gameover();
+    QVector<Object *> objects;
+
 public slots:
     void create();
-    void start();
-    void newgame();
-
-};
-
+  };
 #endif // GAME_H
